@@ -1,0 +1,182 @@
+class BinarytreeNode:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+def printTree(root):
+    if root == None:
+        return
+    print(root.data)
+    printTree(root.left)
+    printTree(root.right)
+    
+def treeinput():
+    rootdata = int(input())
+    if rootdata == -1:
+        return
+    root = BinarytreeNode(rootdata)
+    root.left = treeinput()
+    root.right = treeinput()
+    return root
+# number of nodes in binary tree
+
+def numNodes(root):
+    if root == None:
+        return 0
+    countl = numNodes(root.left)
+    countR = numNodes(root.right)
+    
+    return 1 + countl + countR
+# Sum of Nodes in Binary Tree
+
+def SumNodes(root):
+    if root == None:
+        return 0
+    suml = SumNodes(root.left)
+    sumR = SumNodes(root.right)
+    
+    return root.data + suml + sumR
+# Preorder Binary Tree
+
+def preorder(root):
+    if root == None:
+        return
+    print(root.data, end=" ")
+    preorder(root.left)
+    print(end= " ")
+    preorder(root.right)
+    print(end= " ")
+    
+# Postorder Binary Tree
+
+
+def postorder(root):
+    if root == None:
+        return
+    preorder(root.left)
+    preorder(root.right)
+    
+    print(root.data,end=" ")
+    
+    
+# Largest Node in Binary Tree
+
+def printlargestNode(root):
+    if root == None:
+        return -1
+    s1 = printlargestNode(root.left)
+    s2 = printlargestNode(root.right)
+    largest = max (root.data, s1, s2)
+    return largest
+# Nodes Greater Than X
+
+def countgreaterThanX(root, x):
+    if root == None:
+        return 0
+    count = 0
+    if root.data > x:
+        count = count + 1
+        
+    LC = countgreaterThanX(root.left, x)
+    RC = countgreaterThanX(root.right, x)
+    
+    return count + LC + RC
+
+    
+# height of binary Tree
+
+def Height(root):
+    if root == None:
+        return 0
+    lh = Height(root.left)
+    rh = Height(root.left)
+    
+    if lh > rh :
+        return 1 + lh
+    else:
+        return 1 + rh
+    
+    
+#Count Number of lead nodes
+
+def countLeafNodes(root):
+    if root == None:
+        return 0
+    if root.left == None and root.right == None:
+        return 1
+    
+    leafl = countLeafNodes(root.left)
+    leafr = countLeafNodes(root.right)
+    return   leafl + leafr
+
+    
+# Print nodes at given depth of Binary Tree
+
+def printdepthk(root, k):
+    if root == None:
+        return
+    if k == 0:
+        print(root.data)
+        return
+    printdepthk(root.left, k-1)
+    printdepthk(root.right, k-1)
+# Print nodes at given depth of Binary Tree 2nd approach
+
+def printdepthkv2(root, k, d = 0):
+    if root == None:
+        return
+    if k == d:
+        print(root.data)
+        return
+    printdepthkv2(root.left, k, d + 1)
+    printdepthkv2(root.right, k, d + 1)
+    
+# Not working in jup but working in cod Nin
+# change nodes according to thier depth of binary tree
+
+def changeToDepthTree(root,level = 0) :
+    if root == None:
+        return
+    root.data = level
+    changeToDepthTree(root.left,level + 1)
+    changeToDepthTree(root.right, level + 1)
+    
+# whether given node present ,true or false
+
+def isNodePresent(root, x):
+    if root == None:
+        return False
+    if root.data == x:
+        return True
+    if  isNodePresent(root.left, x):
+        return True
+    if isNodePresent(root.right, x):
+        return True
+    
+   
+    return False
+    
+# Nodes without sibling
+
+def printNodesWithoutSibling(root) :
+    if root == None:
+        return
+    
+    if root.left == None and root.right != None:
+        print(root.right.data,end= " ")
+        printNodesWithoutSibling(root.right)
+        return
+    
+    if  root.left != None and root.right == None:
+        print(root.left.data, end=" ")
+        printNodesWithoutSibling(root.left)
+        return
+    
+    printNodesWithoutSibling(root.right)
+    printNodesWithoutSibling(root.left)
+    
+        
+root = treeinput()
+printTree(root)
+print()
+printNodesWithoutSibling(root)
